@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Department {
@@ -17,8 +18,9 @@ public class Department {
 
 	@Transient
 	public List<String> getEmployeeNames() {
-		List<String> names = new ArrayList<String>(people.size());
-		people.forEach(person -> names.add(person.getFirstName() + " " + person.getLastName()) );
+		List names = people.stream()
+				.map(person -> new String(person.getFirstName() + " " + person.getLastName()))
+				.collect(Collectors.toCollection(ArrayList::new));
 		return names;
 	}
 
