@@ -1,7 +1,5 @@
 package hello;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,8 +22,8 @@ public class Department {
 	@Transient
 	public List<String> getEmployeeNames() {
 		return people.stream()
-				.map(person -> new String(person.getFirstName() + " " + person.getLastName()))
-				.collect(Collectors.toCollection(ArrayList::new));
+			.map(person -> new String(person.getFirstName() + " " + person.getLastName()))
+			.collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	@OneToMany(mappedBy = "department")
