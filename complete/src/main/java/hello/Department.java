@@ -1,6 +1,9 @@
 package hello;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,6 +15,13 @@ public class Department {
 
 	private String name;
 
+	@Transient
+	public List<String> getEmployeeNames() {
+		List<String> names = new ArrayList<String>(people.size());
+		people.forEach(person -> names.add(person.getFirstName() + " " + person.getLastName()) );
+		return names;
+	}
+
 	@OneToMany(mappedBy = "department")
 	private List<Person> people;
 
@@ -20,7 +30,7 @@ public class Department {
 	}
 
 	Department() {}
-	
+
 	public String getName() {
 		return name;
 	}

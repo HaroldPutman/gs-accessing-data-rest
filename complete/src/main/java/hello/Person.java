@@ -12,6 +12,11 @@ public class Person {
 	private String firstName;
 	private String lastName;
 
+	@Transient
+	public String getDepartmentName() {
+		return department.getName();
+	};
+
 	@ManyToOne
 	private Department department;
 
