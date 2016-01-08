@@ -2,7 +2,12 @@ package hello;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,10 +23,9 @@ public class Department {
 
 	@Transient
 	public List<String> getEmployeeNames() {
-		List names = people.stream()
+		return people.stream()
 				.map(person -> new String(person.getFirstName() + " " + person.getLastName()))
 				.collect(Collectors.toCollection(ArrayList::new));
-		return names;
 	}
 
 	@OneToMany(mappedBy = "department")
